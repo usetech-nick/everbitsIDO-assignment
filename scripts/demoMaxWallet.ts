@@ -64,6 +64,7 @@ async function main() {
   // ❌ Second contribution (should revert)
   console.log("Simulating failing contribution (callStatic)");
 
+    // using static call to show revert msg as ethers fails at gas estimation during real call
 try {
   await ido.callStatic.contribute({
     value: ethers.utils.parseEther("0.0011"),
