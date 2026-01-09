@@ -10,7 +10,6 @@ async function main() {
 
   const Factory = await ethers.getContractFactory("LaunchpadFactory");
 
-  // 👇 Build deploy tx manually
   const deployTx = Factory.getDeployTransaction(
     UNISWAP_V2_ROUTER,
     UNISWAP_V2_FACTORY,
@@ -19,6 +18,7 @@ async function main() {
 
 deployTx.gasLimit = 6_000_000;
 deployTx.gasPrice = ethers.utils.parseUnits("15", "gwei");
+
   console.log("Sending raw deploy tx...");
 
   const tx = await signer.sendTransaction(deployTx);
