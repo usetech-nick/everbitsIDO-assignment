@@ -47,7 +47,8 @@ contract EverbitsIDO is Ownable {
         }
     }
 
-    function contribute(uint256 amount) external {
+    function contribute() external payable{
+        uint256 amount = msg.value;
         require(
             block.timestamp >= idoParams.startTimestamp,
             "IDO not started yet"
@@ -55,6 +56,19 @@ contract EverbitsIDO is Ownable {
         require(block.timestamp <= idoParams.endTimestamp, "IDO ended");
         require(amount > 0, "Amount must be greater than 0");
         require(idoBalance + amount <= idoParams.hardCap, "Hard cap reached");
+
+    // total contribution from user
+    uint256 newContribution = contributions[msg.sender] + amount;
+        
+    // max tokens user could EVER get (worst-case: hard cap reached)
+    uint256 maxPossibleTokens =
+        (newContribution * idoParams.idoSupply) / idoParams.hardCap;
+
+    require(
+        maxPossibleTokens <= idoParams.maxTokensPerWallet,
+        "Max tokens per wallet exceeded"
+    );
+
 
         contributions[msg.sender] += amount;
         idoBalance += amount;

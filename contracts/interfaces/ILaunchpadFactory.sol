@@ -20,6 +20,8 @@ struct StandardIDOParams {
     uint256 startTimestamp;
     uint256 endTimestamp;
     uint256 liquidityLockDuration;
+    // added maximum tokens per wallet
+    uint256 maxTokensPerWallet;
 }
 
 interface ILaunchpadFactory {
